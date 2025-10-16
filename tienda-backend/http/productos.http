@@ -1,0 +1,134 @@
+### API Tests for Productos - Spring Boot Backend
+### Base URL: http://localhost:8080/api/productos
+
+### 1. Get all products
+GET http://localhost:8080/api/productos
+Content-Type: application/json
+
+###
+
+### 2. Get product by ID
+GET http://localhost:8080/api/productos/1
+Content-Type: application/json
+
+###
+
+### 3. Create a new product
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Laptop Gaming",
+  "descripcion": "Laptop de alto rendimiento para gaming",
+  "precio": 1299.99,
+  "stock": 10,
+  "imagen": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400"
+}
+
+###
+
+### 4. Create another product
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Smartphone Pro",
+  "descripcion": "Smartphone de última generación",
+  "precio": 899.99,
+  "stock": 25,
+  "imagen": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400"
+}
+
+###
+
+### 5. Create a third product
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Auriculares Inalámbricos",
+  "descripcion": "Auriculares con cancelación de ruido",
+  "precio": 199.99,
+  "stock": 50,
+  "imagen": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"
+}
+
+###
+
+### 6. Update product by ID
+PUT http://localhost:8080/api/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Laptop Gaming Pro",
+  "descripcion": "Laptop de alto rendimiento para gaming profesional",
+  "precio": 1499.99,
+  "stock": 8,
+  "imagen": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400"
+}
+
+###
+
+### 7. Search products by name (exact)
+GET http://localhost:8080/api/productos/buscar?nombre=Laptop Gaming Pro
+Content-Type: application/json
+
+###
+
+### 8. Search products by partial name
+GET http://localhost:8080/api/productos/buscar-parcial?nombre=Laptop
+Content-Type: application/json
+
+###
+
+### 9. Search products by price range
+GET http://localhost:8080/api/productos/precio?min=100&max=500
+Content-Type: application/json
+
+###
+
+### 10. Get product count
+GET http://localhost:8080/api/productos/count
+Content-Type: application/json
+
+###
+
+### 11. Check if product exists by ID
+GET http://localhost:8080/api/productos/1/exists
+Content-Type: application/json
+
+###
+
+### 12. Delete product by ID
+DELETE http://localhost:8080/api/productos/3
+Content-Type: application/json
+
+###
+
+### 13. Get all products (after deletion)
+GET http://localhost:8080/api/productos
+Content-Type: application/json
+
+###
+
+### Test with invalid data (should return 400 Bad Request)
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "descripcion": "Producto sin nombre",
+  "precio": -10.0,
+  "stock": -5,
+  "imagen": "invalid-url"
+}
+
+###
+
+### Test with missing required fields (should return 400 Bad Request)
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "descripcion": "Producto sin nombre y precio"
+}

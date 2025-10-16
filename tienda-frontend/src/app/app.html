@@ -1,0 +1,16 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>Tienda de Productos</h1>
+    <p>Bienvenido </p>
+    <button (click)="changeView()">
+      @if (isListRoute) {
+        Crear producto
+      } @else {
+        Ver listado
+      }
+    </button>
+  </header>
+  
+  <router-outlet></router-outlet>
+  
+</div>

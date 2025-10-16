@@ -1,0 +1,41 @@
+### Test de endpoints de productos e imágenes
+
+# Obtener todos los productos (debug)
+GET http://localhost:8080/api/productos/debug
+
+###
+
+# Obtener todos los productos
+GET http://localhost:8080/api/productos
+
+###
+
+# Crear un producto con imagen
+POST http://localhost:8080/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto de Prueba",
+  "descripcion": "Descripción del producto de prueba",
+  "precio": 99.99,
+  "stock": 10,
+  "imagen": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop"
+}
+
+###
+
+# Probar acceso a imagen estática (si existe)
+GET http://localhost:8080/api/files/images/ejemplo.jpg
+
+###
+
+# Subir archivo (requiere archivo real)
+POST http://localhost:8080/api/files/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./test-image.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

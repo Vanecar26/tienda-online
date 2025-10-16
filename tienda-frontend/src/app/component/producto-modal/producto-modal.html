@@ -1,0 +1,47 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="onBackdropClick($event)">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2>{{ producto?.nombre }}</h2>
+      <button class="close-button" (click)="onClose()" type="button">
+        ✕
+      </button>
+    </div>
+    
+    <div class="modal-content">
+      <div class="producto-imagen-modal">
+        <img 
+          [src]="producto?.imagen || 'assets/placeholder-image.png'" 
+          [alt]="producto?.nombre"
+          (error)="onImageError($event)"
+          loading="lazy"
+        />
+      </div>
+      
+      <div class="producto-details">
+        <div class="detail-section">
+          <h3>Descripción</h3>
+          <p class="descripcion-completa">{{ producto?.descripcion }}</p>
+        </div>
+        
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Precio:</span>
+            <span class="detail-value precio">${{ producto?.precio | number:'1.2-2' }}</span>
+          </div>
+          
+          <div class="detail-item">
+            <span class="detail-label">Stock disponible:</span>
+            <span class="detail-value stock">{{ producto?.stock }} unidades</span>
+          </div>
+          
+          <div class="detail-item">
+            <span class="detail-label">ID del producto:</span>
+            <span class="detail-value id">{{ producto?.id }}</span>
+          </div>
+        </div>
+
+       
+      </div>
+    </div>
+  </div>
+</div>

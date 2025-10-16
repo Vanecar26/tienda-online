@@ -1,0 +1,125 @@
+<div class="form-container">
+  <h2>{{ titulo }}</h2>
+  
+  <form [formGroup]="productoForm" (ngSubmit)="onSubmit()" class="producto-form">
+    
+    <!-- Campo Nombre -->
+    <div class="form-group">
+      <label for="nombre">Nombre del Producto: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="nombre" 
+        formControlName="nombre" 
+        class="form-control"
+        [class.error]="productoForm.get('nombre')?.invalid && productoForm.get('nombre')?.touched"
+        placeholder="Ingresa el nombre del producto"
+        maxlength="100">
+      
+      @if (getFieldError('nombre')) {
+        <div class="error-message">
+          {{ getFieldError('nombre') }}
+        </div>
+      }
+    </div>
+
+    <!-- Campo Descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <textarea 
+        id="descripcion" 
+        formControlName="descripcion" 
+        class="form-control textarea"
+        [class.error]="productoForm.get('descripcion')?.invalid && productoForm.get('descripcion')?.touched"
+        placeholder="Describe el producto (opcional)"
+        maxlength="500"
+        rows="3"></textarea>
+      
+      @if (getFieldError('descripcion')) {
+        <div class="error-message">
+          {{ getFieldError('descripcion') }}
+        </div>
+      }
+    </div>
+
+    <!-- Campo Precio -->
+    <div class="form-group">
+      <label for="precio">Precio: <span class="required">*</span></label>
+      <input 
+        type="number" 
+        id="precio" 
+        formControlName="precio" 
+        class="form-control"
+        [class.error]="productoForm.get('precio')?.invalid && productoForm.get('precio')?.touched"
+        placeholder="0.00"
+        step="0.01"
+        min="0.01">
+      
+      @if (getFieldError('precio')) {
+        <div class="error-message">
+          {{ getFieldError('precio') }}
+        </div>
+      }
+    </div>
+
+    <!-- Campo Stock -->
+    <div class="form-group">
+      <label for="stock">Stock: <span class="required">*</span></label>
+      <input 
+        type="number" 
+        id="stock" 
+        formControlName="stock" 
+        class="form-control"
+        [class.error]="productoForm.get('stock')?.invalid && productoForm.get('stock')?.touched"
+        placeholder="0"
+        min="0"
+        step="1">
+      
+      @if (getFieldError('stock')) {
+        <div class="error-message">
+          {{ getFieldError('stock') }}
+        </div>
+      }
+    </div>
+
+    <!-- Campo URL de Imagen -->
+    <div class="form-group">
+      <label for="imagen">URL de la Imagen:</label>
+      <input 
+        type="url" 
+        id="imagen" 
+        formControlName="imagen" 
+        class="form-control"
+        [class.error]="productoForm.get('imagen')?.invalid && productoForm.get('imagen')?.touched"
+        placeholder="https://ejemplo.com/imagen.jpg">
+      
+      @if (getFieldError('imagen')) {
+        <div class="error-message">
+          {{ getFieldError('imagen') }}
+        </div>
+      }
+    </div>
+
+    <!-- Botón de Envío -->
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn-submit"
+        [disabled]="productoForm.invalid || isSubmitting">
+        @if (isSubmitting) {
+          {{ isEditMode ? 'Actualizando...' : 'Creando...' }}
+        } @else {
+          {{ isEditMode ? 'Actualizar Producto' : 'Crear Producto' }}
+        }
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn-reset"
+        (click)="productoForm.reset()"
+        [disabled]="isSubmitting">
+        Limpiar Formulario
+      </button>
+    </div>
+
+  </form>
+</div>
