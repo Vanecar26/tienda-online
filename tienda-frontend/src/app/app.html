@@ -1,16 +1,26 @@
 <div class="app-container">
-  <header class="app-header">
-    <h1>Tienda de Productos</h1>
-    <p>Bienvenido </p>
-    <button (click)="changeView()">
-      @if (isListRoute) {
-        Crear producto
-      } @else {
-        Ver listado
-      }
-    </button>
-  </header>
+  @if (isLoggedIn) {
+    <header class="app-header">
+      <div class="header-content">
+        <h1>🛍️ Tienda Online</h1>
+        <div class="user-info">
+          <span class="welcome-text">
+            Bienvenido, {{ currentUser?.username }}
+            @if (currentUser?.role === 'ADMINISTRADOR') {
+              <span class="role-badge admin">👨‍💼 Administrador</span>
+            } @else {
+              <span class="role-badge client">👤 Cliente</span>
+            }
+          </span>
+          <button class="btn-logout" (click)="logout()">
+            🚪 Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </header>
+  }
   
-  <router-outlet></router-outlet>
-  
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
 </div>

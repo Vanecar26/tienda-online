@@ -1,15 +1,73 @@
 <div class="producto-list-container">
-  <h2>Lista de Productos</h2>
-  <div class="productos-grid">
-    @for (producto of productos; track producto.id) {
-      <app-producto-card 
-        [producto]="producto" 
-        (eliminarProducto)="onEliminar($event)"
-        (editarProducto)="onEditar($event)"
-        (verDetalle)="onVerDetalle($event)">
-      </app-producto-card>
-    }
+  <div class="header-controls">
+    <h2>Lista de Productos</h2>
+    <div class="controls">
+      <div class="view-controls">
+        <button 
+          class="btn-view-toggle" 
+          (click)="toggleViewMode()"
+          [class.active]="viewMode === 'grid'"
+        >
+          🔲 Vista de Tarjetas
+        </button>
+        <button 
+          class="btn-view-toggle" 
+          (click)="toggleViewMode()"
+          [class.active]="viewMode === 'list'"
+        >
+          📋 Vista de Lista
+        </button>
+      </div>
+      
+      @if (isAdmin) {
+        <button class="btn-add-product" (click)="agregarProducto()">
+          ➕ Agregar Producto
+        </button>
+      }
+      
+      @if (!isAdmin) {
+        <button class="btn-cart" (click)="goToCart()">
+          🛒 Carrito ({{ cartItemCount }})
+        </button>
+      }
+      
+      <button class="btn-logout" (click)="logout()">
+        🚪 Cerrar Sesión
+      </button>
+    </div>
   </div>
+
+  @if (viewMode === 'grid') {
+    <div class="productos-grid">
+      @for (producto of productos; track producto.id) {
+        <app-producto-card 
+          [producto]="producto" 
+          [showAdminActions]="isAdmin"
+          [isInCart]="isInCart(producto.id)"
+          (eliminarProducto)="onEliminar($event)"
+          (editarProducto)="onEditar($event)"
+          (verDetalle)="onVerDetalle($event)"
+          (addToCart)="onAddToCart($event)"
+          (removeFromCart)="onRemoveFromCart($event)">
+        </app-producto-card>
+      }
+    </div>
+  } @else {
+    <div class="productos-list">
+      @for (producto of productos; track producto.id) {
+        <app-producto-list-view 
+          [producto]="producto" 
+          [showAdminActions]="isAdmin"
+          [isInCart]="isInCart(producto.id)"
+          (eliminarProducto)="onEliminar($event)"
+          (editarProducto)="onEditar($event)"
+          (verDetalle)="onVerDetalle($event)"
+          (addToCart)="onAddToCart($event)"
+          (removeFromCart)="onRemoveFromCart($event)">
+        </app-producto-list-view>
+      }
+    </div>
+  }
 </div>
 
 <app-producto-modal 

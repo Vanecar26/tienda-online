@@ -1,31 +1,31 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from './service/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
- 
+  isLoggedIn: boolean = false;
+  currentUser: any = null;
 
-  constructor(private router: Router) {}
-
-  changeView() {
-    // Obtener la ruta actual
-    const currentUrl = this.router.url;
-    
-    if (currentUrl === '/productos' || currentUrl === '/') {
-      // Si estamos en la lista, ir al formulario
-      this.router.navigate(['/productos/new']);
-    } else {
-      // Si estamos en el formulario, ir a la lista
-      this.router.navigate(['/productos']);
-    }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    // Suscribirse a cambios en el estado de autenticación
+    this.authService.currentUser$.subscribe(user => {
+      this.isLoggedIn = user !== null;
+      this.currentUser = user;
+    });
   }
 
-  get isListRoute(): boolean {
-    return this.router.url === '/productos' || this.router.url === '/';
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

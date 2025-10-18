@@ -1,0 +1,42 @@
+<div class="producto-list-item">
+  <div class="producto-imagen">
+    <img 
+      [src]="producto.imagen || 'assets/placeholder-image.png'" 
+      [alt]="producto.nombre"
+      (error)="onImageError($event)"
+      loading="lazy"
+    />
+  </div>
+  <div class="producto-info">
+    <h3 class="producto-nombre">{{ producto.nombre }}</h3>
+    <p class="producto-descripcion">{{ producto.descripcion }}</p>
+    <div class="producto-details">
+      <span class="producto-precio">${{ producto.precio | number:'1.2-2' }}</span>
+      <span class="producto-stock">Stock: {{ producto.stock }}</span>
+    </div>
+  </div>
+  <div class="producto-actions">
+    <button class="btn-ver" (click)="onVerDetalle()" type="button">
+      👁️ Ver
+    </button>
+    
+    @if (showAdminActions) {
+      <button class="btn-editar" (click)="onEditar()" type="button">
+        ✏️ Editar
+      </button>
+      <button class="btn-eliminar" (click)="onEliminar()" type="button">
+        🗑️ Eliminar
+      </button>
+    } @else {
+      @if (isInCart) {
+        <button class="btn-remove-cart" (click)="onRemoveFromCart()" type="button">
+          🛒 En carrito
+        </button>
+      } @else {
+        <button class="btn-add-cart" (click)="onAddToCart()" type="button">
+          🛒 Agregar
+        </button>
+      }
+    }
+  </div>
+</div>

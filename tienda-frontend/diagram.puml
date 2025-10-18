@@ -1,0 +1,121 @@
+@startuml
+title Vista de Desarrollo - Componentes del Sistema
+
+package "Frontend (Angular)" {
+  [Componente Login]
+  [Componente Productos]
+  [Componente Pedidos]
+}
+
+package "Backend (Spring Boot)" {
+  [Controlador UsuarioController]
+  [Controlador ProductoController]
+  [Servicio ProductoService]
+  [Repositorio ProductoRepository]
+}
+
+package "Base de Datos (MySQL)" {
+  [Tabla Usuarios]
+  [Tabla Productos]
+  [Tabla Pedidos]
+}
+
+[Componente Login] --> [UsuarioController]
+[Componente Productos] --> [ProductoController]
+[ProductoController] --> [ProductoService]
+[ProductoService] --> [ProductoRepository]
+[ProductoRepository] --> [Tabla Productos]
+@enduml
+
+@startuml
+title Vista Lógica - Diagrama de Clases (Gestión de Productos)
+
+
+
+class Producto {
+  -id: int
+  -nombre: String
+  -descripcion: String
+  -precio: double
+  -stock: int
+  +registrarProducto()
+  +editarProducto()
+  +eliminarProducto()
+  +visualizarProductos()
+}
+
+
+Usuario "1" --> "0..*" Producto
+
+
+@enduml
+
+@startuml
+title Vista de Procesos - Flujo de Registro de Producto
+
+start
+:Usuario Administrador;
+:Selecciona opción "Registrar producto";
+:Ingresa datos del producto;
+
+if (Datos válidos?) then (Sí)
+  :Guardar producto en la base de datos;
+  :Confirmar registro exitoso;
+else (No)
+  :Mostrar mensaje de error;
+endif
+
+stop
+@enduml
+
+@startuml
+title Vista Física - Despliegue del Sistema
+
+node "Cliente" {
+  artifact "Navegador Web (Angular)" as navegador
+}
+
+node "Servidor de Aplicaciones" {
+  artifact "Spring Boot API" as backend
+}
+
+node "Servidor de Base de Datos" {
+  artifact "MySQL" as bd
+}
+
+navegador --> backend : HTTP/HTTPS
+backend --> bd : JDBC/MySQL Connector
+@enduml
+
+@startuml
+title Vista de Escenarios - Gestión de Productos
+
+actor "Usuario Administrador" as U
+actor "Usuario Cliente" as C
+
+usecase "Registrar Producto" as CU1
+usecase "Editar Producto" as CU2
+usecase "Eliminar Producto" as CU3
+usecase "Visualizar Productos" as CU4
+usecase "Agregar Productos carrito" as CU5
+usecase "Eliminar productos carrito" as CU6
+usecase "Finalizar compra" as CU7
+
+U --> CU1
+U --> CU2
+U --> CU3
+U --> CU4
+C --> CU4
+C --> CU5
+C --> CU6
+C --> CU7
+@enduml
+
+@startuml
+
+actor "Usuario Cliente" as C
+
+usecase "Finalizar compra" as CU5
+
+C --> CU5
+@enduml

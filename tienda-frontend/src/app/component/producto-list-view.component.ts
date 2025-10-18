@@ -3,13 +3,13 @@ import { DecimalPipe } from '@angular/common';
 import { Producto } from '../model/producto';
 
 @Component({
-  selector: 'app-producto-card',
+  selector: 'app-producto-list-view',
   standalone: true,
   imports: [DecimalPipe],
-  templateUrl: './producto-card.component.html',
-  styleUrl: './producto-card.component.css'
+  templateUrl: './producto-list-view.component.html',
+  styleUrl: './producto-list-view.component.css'
 })
-export class ProductoCardComponent {
+export class ProductoListViewComponent {
   @Input() producto!: Producto;
   @Input() showAdminActions: boolean = false;
   @Input() isInCart: boolean = false;
@@ -21,8 +21,7 @@ export class ProductoCardComponent {
 
   onImageError(event: any) {
     console.log('Error cargando imagen:', event);
-    // Cambiar a imagen placeholder si falla la carga
-    event.target.src = 'https://via.placeholder.com/300x200?text=Sin+Imagen';
+    event.target.src = 'https://via.placeholder.com/100x100?text=Sin+Imagen';
   }
 
   onEliminar() {
@@ -31,20 +30,12 @@ export class ProductoCardComponent {
     }
   }
 
-  /**
-   * Emite el evento para editar el producto con el ID proporcionado
-   * @emits EditarProducto con el ID del producto a editar
-   */
   onEditar() {
     if (this.producto.id) {
       this.editarProducto.emit(this.producto.id);
     }
   }
 
-  /**
-   * Emite el evento para ver el detalle del producto
-   * @emits VerDetalle
-   */
   onVerDetalle() {
     this.verDetalle.emit(this.producto);
   }
@@ -59,4 +50,3 @@ export class ProductoCardComponent {
     }
   }
 }
-

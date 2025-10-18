@@ -1,5 +1,14 @@
 <div class="form-container">
-  <h2>{{ titulo }}</h2>
+  <div class="form-header">
+    <h2>{{ titulo }}</h2>
+    <button 
+      type="button" 
+      class="btn-close"
+      (click)="goBack()"
+      title="Volver">
+      ✕
+    </button>
+  </div>
   
   <form [formGroup]="productoForm" (ngSubmit)="onSubmit()" class="producto-form">
     

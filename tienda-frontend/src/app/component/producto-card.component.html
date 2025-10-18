@@ -14,12 +14,28 @@
     <p class="producto-stock">Stock: {{ producto.stock }}</p>
     <p class="producto-id">ID: {{ producto.id }}</p>
     <div class="botones-accion" (click)="$event.stopPropagation()">
-      <button class="btn-editar" (click)="onEditar()" type="button">
-        ✏️ Editar
+      <button class="btn-ver" (click)="onVerDetalle()" type="button">
+        👁️ Ver
       </button>
-      <button class="btn-eliminar" (click)="onEliminar()" type="button">
-        🗑️ Eliminar
-      </button>
+      
+      @if (showAdminActions) {
+        <button class="btn-editar" (click)="onEditar()" type="button">
+          ✏️ Editar
+        </button>
+        <button class="btn-eliminar" (click)="onEliminar()" type="button">
+          🗑️ Eliminar
+        </button>
+      } @else {
+        @if (isInCart) {
+          <button class="btn-remove-cart" (click)="onRemoveFromCart()" type="button">
+            🛒 En carrito
+          </button>
+        } @else {
+          <button class="btn-add-cart" (click)="onAddToCart()" type="button">
+            🛒 Agregar
+          </button>
+        }
+      }
     </div>
   </div>
 </div>

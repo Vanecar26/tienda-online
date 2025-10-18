@@ -158,4 +158,8 @@ export class ProductoFormComponent implements OnInit {
     };
     return labels[fieldName] || fieldName;
   }
+
+  goBack(): void {
+    this.router.navigate(['/productos']);
+  }
 }
